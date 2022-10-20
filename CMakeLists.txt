@@ -17,8 +17,6 @@ set(ADDITIONAL_LINK_DIRS ${GLEW_DIR}/lib/x64)
 set(BINARIES ${GLEW_DIR}/bin/x64)
 
 if(WIN32)
-    add_compile_options("$<$<C_COMPILER_ID:MSVC>:/utf-8>")
-    add_compile_options("$<$<CXX_COMPILER_ID:MSVC>:/utf-8>")
     set(PROJECT_LIBS glew32 opengl32 glu32 Imm32)
     
     if(MINGW)

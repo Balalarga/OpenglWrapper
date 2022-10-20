@@ -4,6 +4,8 @@
 #include "OpenGL/Core/Geometry.h"
 #include "OpenGL/Core/Object.h"
 #include "OpenGL/Core/Scene.h"
+#include "OpenGL/Core/Texture2d.h"
+
 #include "WindowSystem/OpenglWindow.h"
 
 using namespace std;
@@ -33,9 +35,40 @@ void main()
 }
 )";
 
+std::string vTextureShaderCode = R"(#version 330
+
+layout(location = 0)in vec3 iVert;
+layout(location = 1)in vec2 iUv;
+
+out vec2 vUv;
+
+void main()
+{
+    gl_Position = vec4(iVert, 1.0);
+    vUv = iUv;
+}
+)";
+std::string fTextureShaderCode = R"(#version 330
+
+in vec2 vUv;
+
+out vec4 fragColor;
+
+uniform sampler2D uTexture;
+
+void main()
+{
+    fragColor = texture(uTexture, vUv);
+}
+)";
+
 ShaderPart vShader(ShaderPart::Type::Vertex, vShaderCode);
 ShaderPart fShader(ShaderPart::Type::Fragment, fShaderCode);
 Shader shader(&vShader, &fShader);
+
+ShaderPart vTexturedShader(ShaderPart::Type::Vertex, vTextureShaderCode);
+ShaderPart fTexturedShader(ShaderPart::Type::Fragment, fTextureShaderCode);
+Shader texturedShader(&vTexturedShader, &fTexturedShader);
 
 void BaseInput(ISdlWindow& window)
 {
@@ -47,6 +80,7 @@ void BaseInput(ISdlWindow& window)
         });
 }
 static std::unique_ptr<Geometry> geometry;
+static std::unique_ptr<Texture2d> texture;
 
 void BaseObjects(Scene& scene)
 {
@@ -59,16 +93,19 @@ void BaseObjects(Scene& scene)
     struct Vertex
     {
         float x, y, z;
-        float r, g, b, a;
+        float ux, uy;
     };
     
     Vertex triangle[] {
-        {-0.1f, -0.1f, 0.f, 1.f, 0.f, 0.f, 1.f},
-        {-0.1f,  0.1f, 0.f, 1.f, 1.f, 0.f, 1.f},
-        { 0.0f,  0.0f, 0.f, 1.f, 0.f, 0.f, 1.f},
+        {-1.0f, -1.0f, 0.f, 0.f, 0.f},
+        {-1.0f,  1.0f, 0.f, 0.f, 1.f},
+        { 0.0f,  0.0f, 0.f, 0.5f, 0.5f},
     };
+
+    texture.reset(new Texture2d("Assets/image.png"));
+    
     geometry.reset(new Geometry(Buffer(DataPtr(triangle, sizeof(triangle)/sizeof(triangle[0]), sizeof(triangle[0])), BufferLayout().Float(3).Float(4))));
-    Object& Obj = scene.AddObject(new Object(geometry.get(), &shader));
+    Object& Obj = scene.AddObject(new Object(geometry.get(), &texturedShader, texture.get()));
 }
 
 int main(int argc, char** argv)

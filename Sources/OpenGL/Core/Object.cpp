@@ -16,6 +16,7 @@ void Object::Render()
 		_texture->Bind();
 	
 	_shader->Bind();
+	_shader->SetUniform("uTexture", 0);
 	_geometry->Bind();
 	
 	_geometry->Render();

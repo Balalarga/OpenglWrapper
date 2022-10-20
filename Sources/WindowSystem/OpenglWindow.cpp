@@ -33,6 +33,9 @@ OpenglWindow::OpenglWindow(const ISdlWindowParams& params):
     auto backColor = GetBackgroundColor();
     glClearColor(backColor.r, backColor.g, backColor.b, backColor.a);
 
+    glEnable(GL_BLEND);
+    glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+
 #if USE_IMGUI
     const char* glsl_version = "#version 330";
 
