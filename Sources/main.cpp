@@ -1,6 +1,8 @@
 #include <iostream>
 #include <SDL_syswm.h>
 
+#include "OpenGL/Core/Geometry.h"
+#include "OpenGL/Core/Object.h"
 #include "OpenGL/Core/Scene.h"
 #include "WindowSystem/OpenglWindow.h"
 
@@ -44,6 +46,7 @@ void BaseInput(ISdlWindow& window)
                 window.Close();
         });
 }
+static std::unique_ptr<Geometry> geometry;
 
 void BaseObjects(Scene& scene)
 {
@@ -52,18 +55,20 @@ void BaseObjects(Scene& scene)
         std::cout<<"Shader compilation error\n";
         return;
     }
-    
-    struct {
+ 
+    struct Vertex
+    {
         float x, y, z;
         float r, g, b, a;
-    } triangle[] {
+    };
+    
+    Vertex triangle[] {
         {-0.1f, -0.1f, 0.f, 1.f, 0.f, 0.f, 1.f},
         {-0.1f,  0.1f, 0.f, 1.f, 1.f, 0.f, 1.f},
         { 0.0f,  0.0f, 0.f, 1.f, 0.f, 0.f, 1.f},
     };
-    Buffer buffer(DataPtr(triangle, sizeof(triangle)/sizeof(triangle[0]), sizeof(triangle[0])), BufferLayout().Float(3).Float(4));
-    auto& Obj = scene.AddObject(new IRenderable(buffer));
-    Obj.SetShader(&shader);
+    geometry.reset(new Geometry(Buffer(DataPtr(triangle, sizeof(triangle)/sizeof(triangle[0]), sizeof(triangle[0])), BufferLayout().Float(3).Float(4))));
+    Object& Obj = scene.AddObject(new Object(geometry.get(), &shader));
 }
 
 int main(int argc, char** argv)

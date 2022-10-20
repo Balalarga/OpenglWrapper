@@ -3,6 +3,7 @@
 #include <GL/glew.h>
 
 #include "OpenGL/Core/IRenderable.h"
+#include "OpenGL/Core/Object.h"
 #include "OpenGL/Core/Scene.h"
 
 #if USE_IMGUI
@@ -60,11 +61,9 @@ void OpenglWindow::Render()
 {
     if (Scene* scene = GetScene())
     {
-        for (auto& Obj : scene->GetShaders())
+        for (auto& Obj : scene->GetObjects())
         {
-            Obj->Bind();
-            Obj->BatchRender();
-            Obj->Unbind();
+            Obj->Render();
         }
     }
     ISdlWindow::Render();

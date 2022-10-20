@@ -3,7 +3,7 @@
 
 #include "BufferLayout.h"
 
-
+/// DataPtr to vertex array, which is a some struct
 struct DataPtr
 {
     DataPtr();
