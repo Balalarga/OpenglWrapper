@@ -16,11 +16,11 @@ Texture2d::Texture2d(glm::vec2 size, int channels, const unsigned char* data):
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);
 	
 	if (_channels == 1)
-		glTexImage2D(GL_TEXTURE_2D, 0, GL_R8, _size.x, _size.y, 0, GL_RGBA, GL_UNSIGNED_BYTE, data);
+		glTexImage2D(GL_TEXTURE_2D, 0, GL_R8, _size.x, _size.y, 0, GL_R, GL_UNSIGNED_BYTE, data);
 	else if (_channels == 2)
-		glTexImage2D(GL_TEXTURE_2D, 0, GL_RG8, _size.x, _size.y, 0, GL_RGBA, GL_UNSIGNED_BYTE, data);
+		glTexImage2D(GL_TEXTURE_2D, 0, GL_RG8, _size.x, _size.y, 0, GL_RG, GL_UNSIGNED_BYTE, data);
 	else if (_channels == 3)
-		glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB8, _size.x, _size.y, 0, GL_RGBA, GL_UNSIGNED_BYTE, data);
+		glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB8, _size.x, _size.y, 0, GL_RGB, GL_UNSIGNED_BYTE, data);
 	else
 		glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA8, _size.x, _size.y, 0, GL_RGBA, GL_UNSIGNED_BYTE, data);
 	

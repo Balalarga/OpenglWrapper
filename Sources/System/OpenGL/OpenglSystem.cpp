@@ -45,8 +45,3 @@ void OpenglSystem::SetClearColor(const SDL_Color& color)
 		static_cast<float>(color.b)/255.f,
 		static_cast<float>(color.a)/255.f);
 }
-
-void OpenglSystem::Clear(unsigned buffers)
-{
-	glClear(buffers);
-}

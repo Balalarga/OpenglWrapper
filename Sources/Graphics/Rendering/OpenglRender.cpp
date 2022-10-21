@@ -13,7 +13,7 @@ OpenglRender::OpenglRender(SDL_Window* window):
 void OpenglRender::Clear()
 {
 	OpenglSystem::SetClearColor(_backColor);
-	OpenglSystem::Clear(GL_COLOR_BUFFER_BIT|GL_DEPTH_BUFFER_BIT);
+	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 }
 
 void OpenglRender::Render()

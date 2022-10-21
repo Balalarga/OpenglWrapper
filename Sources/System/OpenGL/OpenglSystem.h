@@ -32,8 +32,6 @@ public:
 
 	// OpenglWrapping
 	static void SetClearColor(const SDL_Color& color);
-	static void Clear(unsigned buffers);
-	
 
 private:
 	Params _params;
