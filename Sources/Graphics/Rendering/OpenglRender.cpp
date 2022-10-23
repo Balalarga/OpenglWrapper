@@ -18,7 +18,10 @@ void OpenglRender::Clear()
 
 void OpenglRender::Render()
 {
-	
+	for (const std::shared_ptr<Object>& object : _objects)
+	{
+		object->Render();
+	}
 }
 
 void OpenglRender::Present()

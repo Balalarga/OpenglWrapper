@@ -4,9 +4,12 @@
 class ShaderPart
 {
 public:
-	enum class Type
+	enum class Type: uint8_t
 	{
-		Vertex, Fragment, Geometry
+		Vertex = 0,
+		Fragment,
+		Geometry,
+		Count
 	};
 	
 	ShaderPart() = default;
