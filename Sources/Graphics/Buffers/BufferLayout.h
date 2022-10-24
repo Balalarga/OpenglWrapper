@@ -12,10 +12,6 @@ public:
 		bool Normalized = true;
 	};
 	
-	template<class T> BufferLayout& Add(unsigned count) {}
-	template<float> BufferLayout& Add(unsigned count) { return Float(count); }
-	template<int> BufferLayout& Add(unsigned count) { return Int(count); }
-	template<unsigned> BufferLayout& Add(unsigned count) { return Unsigned(count); }
 	BufferLayout& Float(unsigned count);
 	BufferLayout& Int(unsigned count);
 	BufferLayout& Unsigned(unsigned count);

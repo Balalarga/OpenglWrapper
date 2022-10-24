@@ -28,67 +28,34 @@ bool Material::AddUniform(const std::string& name)
 	return true;
 }
 
-void Material::SetUniform(const std::string &name, const int &value)
+void Material::SetUniform(const std::string &name, const UniformValue& value)
 {
 	int loc = GetUniformLocation(name);
-	if (loc >= 0)
+	if (loc < 0)
+		return;
+	
+	std::visit([&](auto&& arg)
 	{
-		glUniform1i(loc, value);
-	}
-}
-
-void Material::SetUniform(const std::string &name, const float &value)
-{
-	int loc = GetUniformLocation(name);
-	if (loc >= 0)
-	{
-		glUniform1f(loc, value);
-	}
-}
-
-void Material::SetUniform(const std::string &name, const glm::vec2 &value)
-{
-	int loc = GetUniformLocation(name);
-	if (loc >= 0)
-	{
-		glUniform2f(loc, value.x, value.y);
-	}
-}
-
-void Material::SetUniform(const std::string &name, const glm::vec3 &value)
-{
-	int loc = GetUniformLocation(name);
-	if (loc >= 0)
-	{
-		glUniform3f(loc, value.x, value.y, value.z);
-	}
-}
-
-void Material::SetUniform(const std::string &name, const glm::vec4 &value)
-{
-	int loc = GetUniformLocation(name);
-	if (loc >= 0)
-	{
-		glUniform4f(loc, value.x, value.y, value.z, value.w);
-	}
-}
-
-void Material::SetUniform(const std::string &name, const glm::mat4 &value)
-{
-	int loc = GetUniformLocation(name);
-	if (loc >= 0)
-	{
-		glUniformMatrix4fv(loc, 1, GL_FALSE, &value[0][0]);
-	}
-}
-
-void Material::SetUniform(const std::string &name, const glm::mat3 &value)
-{
-	int loc = GetUniformLocation(name);
-	if (loc >= 0)
-	{
-		glUniformMatrix3fv(loc, 1, GL_FALSE, &value[0][0]);
-	}
+		using T = std::decay_t<decltype(arg)>;
+		if constexpr (std::is_same_v<T, unsigned>)
+			glUniform1ui(loc, arg);
+		else if constexpr (std::is_same_v<T, int>)
+			glUniform1i(loc, arg);
+		else if constexpr (std::is_same_v<T, float>)
+			glUniform1f(loc, arg);
+		else if constexpr (std::is_same_v<T, glm::vec2>)
+			glUniform2f(loc, arg.x, arg.y);
+		else if constexpr (std::is_same_v<T, glm::vec3>)
+			glUniform3f(loc, arg.x, arg.y, arg.z);
+		else if constexpr (std::is_same_v<T, glm::vec4>)
+			glUniform4f(loc, arg.x, arg.y, arg.z, arg.w);
+		else if constexpr (std::is_same_v<T, glm::mat2>)
+			glUniformMatrix2fv(loc, 1, GL_FALSE, &arg[0][0]);
+		else if constexpr (std::is_same_v<T, glm::mat3>)
+			glUniformMatrix3fv(loc, 1, GL_FALSE, &arg[0][0]);
+		else if constexpr (std::is_same_v<T, glm::mat4>)
+			glUniformMatrix4fv(loc, 1, GL_FALSE, &arg[0][0]);
+	}, value);
 }
 
 int Material::GetUniformLocation(const std::string& name)

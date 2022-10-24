@@ -42,7 +42,7 @@ endif()
 set(ENABLE_IMGUI ON)
 if (${ENABLE_IMGUI})
 # ImGui setup
-    add_compile_definitions(USE_IMGUI = 1)
+    add_compile_definitions(USE_IMGUI)
     set(ADDITIONAL_SOURCES
         # Main Imgui files
        ${THIRDPARTY_DIR}/ImGui/imgui.cpp
@@ -56,12 +56,14 @@ if (${ENABLE_IMGUI})
         ${THIRDPARTY_DIR}/ImGui/
         ${THIRDPARTY_DIR}/ImGui/backends/)
 else()
-    add_compile_definitions(USE_IMGUI = 0)
+    # add_compile_definitions(USE_IMGUI = 0)
 endif()
 
 # Find all source files
 file(GLOB_RECURSE PROJECT_SOURCES Sources/*.cpp Sources/*.h Sources/*.hpp)
 add_executable(${PROJECT_NAME} ${PROJECT_SOURCES} ${ADDITIONAL_SOURCES})
+set(ASSETS_DIR ${CMAKE_SOURCE_DIR}/Assets)
+target_compile_definitions(${PROJECT_NAME} PRIVATE "ASSETS_DIR=\"${ASSETS_DIR}\"")
 
 target_link_directories(${PROJECT_NAME} PRIVATE ${ADDITIONAL_LINK_DIRS})
 target_link_libraries(${PROJECT_NAME} ${PROJECT_LIBS})

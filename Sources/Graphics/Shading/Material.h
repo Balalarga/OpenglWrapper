@@ -2,9 +2,9 @@
 #include <map>
 #include <memory>
 #include <string>
-#include <glm/fwd.hpp>
 
 #include "Shader.h"
+#include "Uniform.h"
 
 
 class Shader;
@@ -19,13 +19,7 @@ public:
 	
 	bool AddUniform(const std::string& name);
 	
-	void SetUniform(const std::string& name, const int& value);
-	void SetUniform(const std::string& name, const float& value);
-	void SetUniform(const std::string& name, const glm::vec2& value);
-	void SetUniform(const std::string& name, const glm::vec3& value);
-	void SetUniform(const std::string& name, const glm::vec4& value);
-	void SetUniform(const std::string& name, const glm::mat4& value);
-	void SetUniform(const std::string& name, const glm::mat3& value);
+	void SetUniform(const std::string& name, const UniformValue& value);
 	
 	int GetUniformLocation(const std::string& name);
 	

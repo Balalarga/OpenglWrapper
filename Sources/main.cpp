@@ -42,7 +42,7 @@ uniform sampler2D uTexture;
 
 void main()
 {
-    fragColor = texture(uTexture, vertUv);
+    fragColor = uColor;
 }
 )";
 
@@ -56,7 +56,7 @@ int main(int argc, char** argv)
     
     OpenglRender& render = systemManager.windowSystem->CreateRender<OpenglRender>(systemManager.windowSystem->GetWindow().GetInnerWindow());
     
-    std::shared_ptr<Texture2d> texture = TextureManager::Instance().LoadTexture("newTexture", "../Assets/Gear.png");
+    std::shared_ptr<Texture2d> texture = TextureManager::Instance().LoadTexture("newTexture", ASSETS_DIR"/Gear.png");
     if (!texture)
         return -1;
 
@@ -81,7 +81,7 @@ int main(int argc, char** argv)
     Material mat(shader);
     mat.AddUniform("uColor");
     mat.AddUniform("uTexture");
-    
+    mat.SetUniform("uColor", glm::vec4(1, 1, 1, 0));
     Buffer buffer(DataPtr(triangle, sizeof(triangle)/sizeof(triangle[0]), sizeof(triangle[0])), BufferLayout().Float(3).Float(4).Float(2));
     
     render.CreateObject<Object>(buffer, mat, texture.get());
@@ -92,4 +92,3 @@ int main(int argc, char** argv)
     SystemManager::Destroy();
     return 0;
 }
-;

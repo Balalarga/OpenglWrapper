@@ -13,14 +13,15 @@ void InputManager::Add(SDL_Scancode code, const std::function<void(const KeyStat
 
 bool InputManager::Remove(SDL_Scancode code, const std::function<void(const KeyState&)>& callback)
 {
-	for (size_t i = 0; i < KeyCallbacks[code].size(); ++i)
-	{
-		if (KeyCallbacks[code][i].target<void(const KeyState&)>() == callback.target<void(const KeyState&)>())
-		{
-			KeyCallbacks[code].erase(KeyCallbacks[code].begin() + i);
-			return true;
-		}
-	}
+	// TODO
+	// for (size_t i = 0; i < KeyCallbacks[code].size(); ++i)
+	// {
+		// if (KeyCallbacks[code][i].target<void(const KeyState&)>() == callback.target<void(const KeyState&)>())
+		// {
+			// KeyCallbacks[code].erase(KeyCallbacks[code].begin() + i);
+			// return true;
+		// }
+	// }
 
 	return false;
 }
