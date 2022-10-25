@@ -43,7 +43,7 @@ uniform sampler2D uTexture;
 
 void main()
 {
-    fragColor = texture(uTexture, vertUv);
+    fragColor = uColor;
 }
 )";
 
@@ -51,20 +51,20 @@ std::shared_ptr<Texture2dMaterial> baseMat;
 
 int main(int argc, char** argv)
 {
-    SystemManager& systemManager = SystemManager::Init();
+    const SystemManager& systemManager = SystemManager::Init();
 
     glEnable(GL_BLEND);
     glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
     
     OpenglRender& render = systemManager.windowSystem->CreateRender<OpenglRender>(systemManager.windowSystem->GetWindow().GetInnerWindow());
-    
-    std::shared_ptr<Texture2d> texture = TextureManager::Instance().LoadTexture("newTexture", ASSETS_DIR"/Gear.png");
+
+    const std::shared_ptr<Texture2d> texture = TextureManager::Instance().LoadTexture("newTexture", ASSETS_DIR"/Gear.png");
     if (!texture)
         return -1;
 
-    std::shared_ptr<ShaderPart> vPart = ShaderManager::LoadPart("def", ShaderPart::Type::Vertex, vShaderCode);
-    std::shared_ptr<ShaderPart> fPart = ShaderManager::LoadPart("def", ShaderPart::Type::Fragment, fShaderCode);
-    std::shared_ptr<Shader> shader = ShaderManager::CreateFrom("def", vPart, fPart);
+    const std::shared_ptr<ShaderPart> vPart = ShaderManager::LoadPart("def", ShaderPart::Type::Vertex, vShaderCode);
+    const std::shared_ptr<ShaderPart> fPart = ShaderManager::LoadPart("def", ShaderPart::Type::Fragment, fShaderCode);
+    const std::shared_ptr<Shader> shader = ShaderManager::CreateFrom("def", vPart, fPart);
     ShaderManager::CompileAll();
 
     struct {
@@ -80,7 +80,7 @@ int main(int argc, char** argv)
         {{ 0.5f, -0.5f, 0.f}, {1.f, 1.f, 0.f, 1.f}, { 1.0f, -1.0f}},
         {{-0.5f, -0.5f, 0.f}, {1.f, 0.f, 0.f, 1.f}, {-1.0f, -1.0f}},
     };
-    baseMat = std::make_shared<Texture2dMaterial>(shader, texture);
+    baseMat = std::make_shared<Texture2dMaterial>(shader, texture.get());
     baseMat->SetColor({1, 0, 0, 1});
     Buffer buffer(DataPtr(triangle, std::size(triangle), sizeof(triangle[0])), BufferLayout().Float(3).Float(4).Float(2));
     

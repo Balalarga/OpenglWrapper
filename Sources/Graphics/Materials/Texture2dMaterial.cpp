@@ -2,9 +2,9 @@
 
 #include "Graphics/Texture/Texture2d.h"
 
-Texture2dMaterial::Texture2dMaterial(std::shared_ptr<Shader> shader, std::shared_ptr<Texture2d> texture):
+Texture2dMaterial::Texture2dMaterial(std::shared_ptr<Shader> shader, Texture2d* texture):
 	BaseMaterial(std::move(shader)),
-	_texture(std::move(texture))
+	_texture(texture)
 {
 }
 

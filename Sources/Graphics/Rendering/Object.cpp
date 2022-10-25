@@ -1,6 +1,9 @@
 ﻿#include "Object.h"
 
+#include <cassert>
 #include <GL/glew.h>
+
+#include "Graphics/Materials/IMaterial.h"
 
 Object::Object(Buffer vbo, IMaterial* material):
 	_vbo(std::move(vbo)),
@@ -20,6 +23,11 @@ Object::Object(Buffer vbo, IMaterial* material):
 Object::~Object()
 {
 	glDeleteVertexArrays(1, &_glHandler);
+}
+
+void Object::SetMaterial(IMaterial* material)
+{
+	_material = material;
 }
 
 void Object::Render() const

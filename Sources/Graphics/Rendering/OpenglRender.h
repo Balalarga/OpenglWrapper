@@ -1,7 +1,8 @@
 ﻿#pragma once
-#include "IRender.h"
-#include <SDL_video.h>
+#include <memory>
 #include <vector>
+#include <SDL_video.h>
+#include "IRender.h"
 
 #include "Object.h"
 
