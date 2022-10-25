@@ -1,7 +1,8 @@
 #include <GL/glew.h>
 #include <glm/glm.hpp>
 
-#include "Graphics/Shading//Material.h"
+#include "Graphics/Materials/BaseMaterial.h"
+#include "Graphics/Materials/Texture2dMaterial.h"
 #include "Graphics/Rendering/OpenglRender.h"
 #include "Graphics/Shading/ShaderManager.h"
 #include "Graphics/Texture/TextureManager.h"
@@ -42,10 +43,11 @@ uniform sampler2D uTexture;
 
 void main()
 {
-    fragColor = uColor;
+    fragColor = texture(uTexture, vertUv);
 }
 )";
 
+std::shared_ptr<Texture2dMaterial> baseMat;
 
 int main(int argc, char** argv)
 {
@@ -78,13 +80,11 @@ int main(int argc, char** argv)
         {{ 0.5f, -0.5f, 0.f}, {1.f, 1.f, 0.f, 1.f}, { 1.0f, -1.0f}},
         {{-0.5f, -0.5f, 0.f}, {1.f, 0.f, 0.f, 1.f}, {-1.0f, -1.0f}},
     };
-    Material mat(shader);
-    mat.AddUniform("uColor");
-    mat.AddUniform("uTexture");
-    mat.SetUniform("uColor", glm::vec4(1, 1, 1, 0));
-    Buffer buffer(DataPtr(triangle, sizeof(triangle)/sizeof(triangle[0]), sizeof(triangle[0])), BufferLayout().Float(3).Float(4).Float(2));
+    baseMat = std::make_shared<Texture2dMaterial>(shader, texture);
+    baseMat->SetColor({1, 0, 0, 1});
+    Buffer buffer(DataPtr(triangle, std::size(triangle), sizeof(triangle[0])), BufferLayout().Float(3).Float(4).Float(2));
     
-    render.CreateObject<Object>(buffer, mat, texture.get());
+    render.CreateObject<Object>(buffer, baseMat.get());
     
     AppWindow& window = systemManager.windowSystem->GetWindow();
     window.Show();

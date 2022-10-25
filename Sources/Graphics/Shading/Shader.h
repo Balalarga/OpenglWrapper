@@ -1,6 +1,9 @@
 ﻿#pragma once
+#include <map>
 #include <memory>
 #include <string>
+
+#include "Uniform.h"
 
 
 class ShaderPart;
@@ -19,7 +22,10 @@ public:
     void Bind() const;
     static void Release();
 
-    int GetUniformLocation(const std::string& name) const;
+    void SetUniform(const std::string& name, const UniformValue& value, bool bUnbind = false);
+    
+protected:
+    int GetUniformLocation(const std::string& name);
     
 private:
     struct {
@@ -29,4 +35,6 @@ private:
     } _parts;
     
     unsigned _glHandler = 0;
+    
+    std::map<std::string, int> _uniformCache;
 };

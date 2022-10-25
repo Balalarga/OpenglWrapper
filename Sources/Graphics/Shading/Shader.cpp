@@ -69,9 +69,51 @@ void Shader::Release()
     glUseProgram(0);
 }
 
-int Shader::GetUniformLocation(const std::string& name) const
+void Shader::SetUniform(const std::string& name, const UniformValue& value, bool bUnbind)
 {
-    return glGetUniformLocation(_glHandler, name.c_str());
+    Bind();
+    int loc = GetUniformLocation(name);
+    if (loc < 0)
+        return;
+	
+    std::visit([&](auto&& arg)
+    {
+        using T = std::decay_t<decltype(arg)>;
+        if constexpr (std::is_same_v<T, unsigned>)
+            glUniform1ui(loc, arg);
+        else if constexpr (std::is_same_v<T, int>)
+            glUniform1i(loc, arg);
+        else if constexpr (std::is_same_v<T, float>)
+            glUniform1f(loc, arg);
+        else if constexpr (std::is_same_v<T, glm::vec2>)
+            glUniform2f(loc, arg.x, arg.y);
+        else if constexpr (std::is_same_v<T, glm::vec3>)
+            glUniform3f(loc, arg.x, arg.y, arg.z);
+        else if constexpr (std::is_same_v<T, glm::vec4>)
+            glUniform4f(loc, arg.x, arg.y, arg.z, arg.w);
+        else if constexpr (std::is_same_v<T, glm::mat2>)
+            glUniformMatrix2fv(loc, 1, GL_FALSE, &arg[0][0]);
+        else if constexpr (std::is_same_v<T, glm::mat3>)
+            glUniformMatrix3fv(loc, 1, GL_FALSE, &arg[0][0]);
+        else if constexpr (std::is_same_v<T, glm::mat4>)
+            glUniformMatrix4fv(loc, 1, GL_FALSE, &arg[0][0]);
+    }, value);
+	
+    if (bUnbind)
+        Release();
+}
+
+int Shader::GetUniformLocation(const std::string& name)
+{
+    const auto it = _uniformCache.find(name);
+    if (it != _uniformCache.end())
+        return it->second;
+
+    const int loc = glGetUniformLocation(_glHandler, name.c_str());
+    if (loc >= 0)
+        _uniformCache[name] = loc;
+	
+    return loc;
 }
 
 void Shader::Destroy()
