@@ -4,11 +4,11 @@
 #include "Graphics/Materials/BaseMaterial.h"
 #include "Graphics/Materials/Texture2dMaterial.h"
 #include "Graphics/Rendering/OpenglRender.h"
-#include "Graphics/Shading/ShaderManager.h"
 #include "Graphics/Texture/TextureManager.h"
 #include "System/SystemManager.h"
 #include "System/WindowSystem/AppWindow.h"
 #include "System/WindowSystem/WindowSystem.h"
+#include "Utils/ShaderLoader.h"
 
 using namespace std;
 
@@ -62,11 +62,9 @@ int main(int argc, char** argv)
     if (!texture)
         return -1;
 
-    const std::shared_ptr<ShaderPart> vPart = ShaderManager::LoadPart("def", ShaderPart::Type::Vertex, vShaderCode);
-    const std::shared_ptr<ShaderPart> fPart = ShaderManager::LoadPart("def", ShaderPart::Type::Fragment, fShaderCode);
-    const std::shared_ptr<Shader> shader = ShaderManager::CreateFrom("def", vPart, fPart);
-    ShaderManager::CompileAll();
-
+    const std::shared_ptr<Shader> shader = ShaderLoader::LoadCode(vShaderCode, fShaderCode);
+    shader->Compile();
+    
     struct {
         glm::vec3 pos;
         glm::vec4 color;

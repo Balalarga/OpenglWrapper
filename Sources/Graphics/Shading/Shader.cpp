@@ -1,5 +1,6 @@
 ﻿#include "Shader.h"
 
+#include <utility>
 #include <vector>
 #include <GL/glew.h>
 
@@ -25,10 +26,10 @@ bool HasErrors(unsigned shaderId)
 	return false;
 }
 
-Shader::Shader(ShaderPart* vShader,
-               ShaderPart* fShader,
-               ShaderPart* gShader):
-	_parts({vShader, fShader, gShader})
+Shader::Shader(std::shared_ptr<ShaderPart> vShader,
+               std::shared_ptr<ShaderPart> fShader,
+               std::shared_ptr<ShaderPart> gShader):
+	_parts({std::move(vShader), std::move(fShader), std::move(gShader)})
 {
 }
 
@@ -46,7 +47,7 @@ bool Shader::Compile()
 		parts.push_back(_parts.gShader);
 
 	std::vector<unsigned> attachedShaders;
-	for (ShaderPart* part : parts)
+	for (const std::shared_ptr<ShaderPart>& part : parts)
 	{
 		if (!part->IsInit() && !part->Compile())
 			continue;

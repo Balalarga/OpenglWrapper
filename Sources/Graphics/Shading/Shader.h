@@ -1,5 +1,6 @@
 ﻿#pragma once
 #include <map>
+#include <memory>
 #include <string>
 
 #include "Uniform.h"
@@ -10,9 +11,9 @@ class ShaderPart;
 class Shader
 {
 public:
-	Shader(ShaderPart* vShader,
-	       ShaderPart* fShader,
-	       ShaderPart* gShader = nullptr);
+	Shader(std::shared_ptr<ShaderPart> vShader,
+	       std::shared_ptr<ShaderPart> fShader,
+	       std::shared_ptr<ShaderPart> gShader = nullptr);
 	~Shader();
 
 	bool Compile();
@@ -29,9 +30,9 @@ protected:
 private:
 	struct
 	{
-		ShaderPart* vShader;
-		ShaderPart* fShader;
-		ShaderPart* gShader;
+		std::shared_ptr<ShaderPart> vShader;
+		std::shared_ptr<ShaderPart> fShader;
+		std::shared_ptr<ShaderPart> gShader;
 	} _parts;
 
 	unsigned _glHandler = 0;

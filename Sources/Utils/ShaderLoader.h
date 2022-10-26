@@ -11,7 +11,7 @@ public:
 	                                        const std::string& fsh,
 	                                        const std::string& gsh = "");
 
-	static std::shared_ptr<Shader> LoadFile(const std::string& vPath,
-											const std::string& fPath,
-											const std::string& gPath = "");
+	static std::shared_ptr<Shader> LoadFiles(const std::string& vPath,
+	                                         const std::string& fPath,
+	                                         const std::string& gPath = "");
 };
