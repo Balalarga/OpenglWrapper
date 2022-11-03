@@ -1,6 +1,8 @@
 ﻿#pragma once
 #include <string>
 
+namespace Oglw
+{
 class ShaderPart
 {
 public:
@@ -32,7 +34,7 @@ public:
 protected:
 	static unsigned GetGLType(Type type);
 
-	bool HasError();
+	bool HasError() const;
 
 
 private:
@@ -41,3 +43,4 @@ private:
 	
 	unsigned _glHandler = 0;
 };
+}

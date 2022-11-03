@@ -4,7 +4,7 @@
 #include <sstream>
 
 
-namespace Files
+namespace Oglw::Files
 {
 std::string ReadFile(const std::string& filepath)
 {

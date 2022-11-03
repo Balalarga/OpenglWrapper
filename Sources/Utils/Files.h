@@ -2,7 +2,7 @@
 #include <string>
 
 
-namespace Files
+namespace Oglw::Files
 {
 std::string ReadFile(const std::string& filepath);
 }

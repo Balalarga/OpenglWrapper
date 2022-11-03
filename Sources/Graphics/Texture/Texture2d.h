@@ -1,6 +1,8 @@
 ﻿#pragma once
 #include "glm/glm.hpp"
 
+namespace Oglw
+{
 class Texture2d
 {
 public:
@@ -14,3 +16,4 @@ private:
 	int _channels;
 	unsigned _glHandler;
 };
+}

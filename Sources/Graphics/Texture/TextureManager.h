@@ -4,6 +4,8 @@
 #include <string>
 
 
+namespace Oglw
+{
 class Texture2d;
 
 class TextureManager
@@ -17,3 +19,4 @@ public:
 private:
 	std::map<std::string, std::shared_ptr<Texture2d>> _textures;
 };
+}

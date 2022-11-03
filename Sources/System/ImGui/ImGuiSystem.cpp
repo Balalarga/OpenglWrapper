@@ -7,6 +7,8 @@
 #include "Utils/Macroses.h"
 
 
+namespace Oglw
+{
 ImGuiSystem::ImGuiSystem(const Params& params):
 	ISystem(TOSTRING(ImGuiSystem)),
 	_params(params)
@@ -34,5 +36,6 @@ void ImGuiSystem::Destroy()
 {
 	ImGui_ImplOpenGL3_Shutdown();
 	ImGui_ImplSDL2_Shutdown();
-    ImGui::DestroyContext();
+	ImGui::DestroyContext();
+}
 }

@@ -6,6 +6,8 @@
 #include "System/ISystem.h"
 #include "Utils/Macroses.h"
 
+namespace Oglw
+{
 class WindowSystem: public ISystem
 {
 public:
@@ -35,3 +37,4 @@ private:
 	std::unique_ptr<AppWindow> _window;
 	std::unique_ptr<IRender> _render;
 };
+}

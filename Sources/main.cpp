@@ -11,6 +11,7 @@
 #include "Utils/ShaderLoader.h"
 
 using namespace std;
+using namespace Oglw;
 
 std::string vShaderCode = R"(#version 330
 
@@ -28,6 +29,7 @@ void main()
 {
     gl_Position = uModelMatrix * vec4(iVert, 1.0);
     vertColor = iVertColor;
+    vertUv = iVertUv;
 }
 )";
 
@@ -43,11 +45,41 @@ uniform sampler2D uTexture;
 
 void main()
 {
-    fragColor = uColor;
+    fragColor = texture(uTexture, vertUv);
 }
 )";
 
 std::shared_ptr<Texture2dMaterial> baseMat;
+
+bool TestScene(OpenglRender& render)
+{
+    const std::shared_ptr<Texture2d> texture = TextureManager::Instance().LoadTexture("newTexture", ASSETS_DIR"/Image.png");
+    if (!texture)
+        return false;
+    
+    const std::shared_ptr<Shader> shader = ShaderLoader::LoadCode(vShaderCode, fShaderCode);
+    shader->Compile();
+
+    struct {
+        glm::vec3 pos;
+        glm::vec4 color;
+        glm::vec2 uv;
+    } triangle[] {
+        {{-0.5f, -0.5f, 0.f}, {1.f, 0.f, 0.f, 1.f}, { 0.0f,  0.0f}},
+        {{-0.5f,  0.5f, 0.f}, {1.f, 1.f, 0.f, 1.f}, { 0.0f,  1.0f}},
+        {{ 0.5f,  0.5f, 0.f}, {1.f, 0.f, 0.f, 1.f}, { 1.0f,  1.0f}},
+        {{ 0.5f,  0.5f, 0.f}, {1.f, 0.f, 0.f, 1.f}, { 1.0f,  1.0f}},
+        {{ 0.5f, -0.5f, 0.f}, {1.f, 1.f, 0.f, 1.f}, { 1.0f,  0.0f}},
+        {{-0.5f, -0.5f, 0.f}, {1.f, 0.f, 0.f, 1.f}, { 0.0f,  0.0f}},
+    };
+    baseMat = std::make_shared<Texture2dMaterial>(shader, texture.get());
+    baseMat->SetColor({1, 0, 0, 1});
+    Buffer buffer(DataPtr(triangle, std::size(triangle), sizeof(triangle[0])), BufferLayout().Float(3).Float(4).Float(2));
+    
+    render.CreateObject<Object>(buffer, baseMat.get());
+    
+    return true;
+}
 
 int main(int argc, char** argv)
 {
@@ -58,31 +90,7 @@ int main(int argc, char** argv)
     
     OpenglRender& render = systemManager.windowSystem->CreateRender<OpenglRender>(systemManager.windowSystem->GetWindow().GetInnerWindow());
 
-    const std::shared_ptr<Texture2d> texture = TextureManager::Instance().LoadTexture("newTexture", ASSETS_DIR"/Gear.png");
-    if (!texture)
-        return -1;
-
-    const std::shared_ptr<Shader> shader = ShaderLoader::LoadCode(vShaderCode, fShaderCode);
-    shader->Compile();
-    
-    struct {
-        glm::vec3 pos;
-        glm::vec4 color;
-        glm::vec2 uv;
-    } triangle[] {
-        {{-0.5f, -0.5f, 0.f}, {1.f, 0.f, 0.f, 1.f}, {-1.0f, -1.0f}},
-        {{-0.5f,  0.5f, 0.f}, {1.f, 1.f, 0.f, 1.f}, {-1.0f,  1.0f}},
-        {{ 0.5f,  0.5f, 0.f}, {1.f, 0.f, 0.f, 1.f}, { 1.0f,  1.0f}},
-        
-        {{ 0.5f,  0.5f, 0.f}, {1.f, 0.f, 0.f, 1.f}, { 1.0f,  1.0f}},
-        {{ 0.5f, -0.5f, 0.f}, {1.f, 1.f, 0.f, 1.f}, { 1.0f, -1.0f}},
-        {{-0.5f, -0.5f, 0.f}, {1.f, 0.f, 0.f, 1.f}, {-1.0f, -1.0f}},
-    };
-    baseMat = std::make_shared<Texture2dMaterial>(shader, texture.get());
-    baseMat->SetColor({1, 0, 0, 1});
-    Buffer buffer(DataPtr(triangle, std::size(triangle), sizeof(triangle[0])), BufferLayout().Float(3).Float(4).Float(2));
-    
-    render.CreateObject<Object>(buffer, baseMat.get());
+    TestScene(render);
     
     AppWindow& window = systemManager.windowSystem->GetWindow();
     window.Show();

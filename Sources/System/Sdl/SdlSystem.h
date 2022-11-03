@@ -2,6 +2,8 @@
 #include <SDL.h>
 #include "System/ISystem.h"
 
+namespace Oglw
+{
 class SdlSystem: public ISystem
 {
 public:
@@ -23,3 +25,4 @@ private:
 	Params _params;
 	SDL_DisplayMode _displayInfo;
 };
+}

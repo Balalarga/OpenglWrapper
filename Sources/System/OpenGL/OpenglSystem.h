@@ -4,6 +4,8 @@
 
 #include "System/ISystem.h"
 
+namespace Oglw
+{
 class WindowSystem;
 
 class OpenglSystem: public ISystem
@@ -35,5 +37,6 @@ public:
 
 private:
 	Params _params;
-    SDL_GLContext _glContext;
+	SDL_GLContext _glContext;
 };
+}

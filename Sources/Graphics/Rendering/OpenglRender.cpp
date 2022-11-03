@@ -4,6 +4,8 @@
 #include <GL/glew.h>
 #include "System/OpenGL/OpenglSystem.h"
 
+namespace Oglw
+{
 OpenglRender::OpenglRender(SDL_Window* window):
 	_window(window)
 {
@@ -33,4 +35,5 @@ void OpenglRender::SetClearColor(const SDL_Color& color)
 {
 	_backColor = color;
 	OpenglSystem::SetClearColor(_backColor);
+}
 }

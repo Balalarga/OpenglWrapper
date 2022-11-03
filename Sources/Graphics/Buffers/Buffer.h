@@ -3,6 +3,8 @@
 #include "BufferLayout.h"
 
 
+namespace Oglw
+{
 struct DataPtr
 {
     DataPtr();
@@ -34,3 +36,4 @@ struct Buffer
 
     unsigned Create();
 };
+}

@@ -6,6 +6,8 @@
 
 #include "ShaderPart.h"
 
+namespace Oglw
+{
 bool HasErrors(unsigned shaderId)
 {
 	GLint isCompiled = 0;
@@ -27,8 +29,8 @@ bool HasErrors(unsigned shaderId)
 }
 
 Shader::Shader(std::shared_ptr<ShaderPart> vShader,
-               std::shared_ptr<ShaderPart> fShader,
-               std::shared_ptr<ShaderPart> gShader):
+			   std::shared_ptr<ShaderPart> fShader,
+			   std::shared_ptr<ShaderPart> gShader):
 	_parts({std::move(vShader), std::move(fShader), std::move(gShader)})
 {
 }
@@ -87,11 +89,11 @@ void Shader::SetUniform(const std::string& name, const UniformValue& value, bool
 			else if constexpr (std::is_same_v<T, float>)
 				glUniform1f(loc, arg);
 			else if constexpr (std::is_same_v<T, glm::vec2>)
-				glUniform2f(loc, arg.x, arg.y);
+				glUniform2fv(loc, 1, &arg.x);
 			else if constexpr (std::is_same_v<T, glm::vec3>)
-				glUniform3f(loc, arg.x, arg.y, arg.z);
+				glUniform3fv(loc, 1, &arg.x);
 			else if constexpr (std::is_same_v<T, glm::vec4>)
-				glUniform4f(loc, arg.x, arg.y, arg.z, arg.w);
+				glUniform4fv(loc, 1, &arg.x);
 			else if constexpr (std::is_same_v<T, glm::mat2>)
 				glUniformMatrix2fv(loc, 1, GL_FALSE, &arg[0][0]);
 			else if constexpr (std::is_same_v<T, glm::mat3>)
@@ -131,4 +133,5 @@ void Shader::Destroy()
 		glDeleteProgram(_glHandler);
 		_glHandler = 0;
 	}
+}
 }

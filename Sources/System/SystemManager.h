@@ -5,6 +5,8 @@
 #include <cassert>
 #include "ISystem.h"
 
+namespace Oglw
+{
 class ImGuiSystem;
 class OpenglSystem;
 class WindowSystem;
@@ -57,3 +59,4 @@ private:
 	std::vector<std::unique_ptr<ISystem>> _systems;
 	std::map<std::string, size_t> _names;
 };
+}

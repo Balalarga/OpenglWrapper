@@ -5,6 +5,8 @@
 #include "System/WindowSystem/WindowSystem.h"
 #include "Utils/Macroses.h"
 
+namespace Oglw
+{
 OpenglSystem::OpenglSystem(const Params& params):
 	ISystem(TOSTRING(OpenglSystem)),
 	_params(params),
@@ -35,7 +37,7 @@ bool OpenglSystem::Init(bool bStatus)
 
 void OpenglSystem::Destroy()
 {
-    SDL_GL_DeleteContext(_glContext);
+	SDL_GL_DeleteContext(_glContext);
 }
 
 void OpenglSystem::SetClearColor(const SDL_Color& color)
@@ -44,4 +46,5 @@ void OpenglSystem::SetClearColor(const SDL_Color& color)
 		static_cast<float>(color.g)/255.f,
 		static_cast<float>(color.b)/255.f,
 		static_cast<float>(color.a)/255.f);
+}
 }

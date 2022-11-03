@@ -1,6 +1,8 @@
 ﻿#pragma once
 #include "Graphics/Buffers/Buffer.h"
 
+namespace Oglw
+{
 class IMaterial;
 
 class Object
@@ -19,3 +21,4 @@ private:
 	Buffer _vbo;
 	IMaterial* _material;
 };
+}

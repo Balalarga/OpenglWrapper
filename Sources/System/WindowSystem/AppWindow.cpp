@@ -3,6 +3,8 @@
 #include "Graphics/Rendering/IRender.h"
 #include "Input/InputManager.h"
 
+namespace Oglw
+{
 AppWindow::AppWindow(const Params& params, WindowSystem& windowSystem):
 	_params(params),
 	_windowSystem(windowSystem),
@@ -18,7 +20,7 @@ AppWindow::AppWindow(const Params& params, WindowSystem& windowSystem):
 
 AppWindow::~AppWindow()
 {
-    SDL_DestroyWindow(_sdlWindow);
+	SDL_DestroyWindow(_sdlWindow);
 }
 
 void AppWindow::Show()
@@ -47,29 +49,30 @@ void AppWindow::HandleEvents(SDL_Event& event)
 	switch(event.type)
 	{
 	case SDL_QUIT:
-		{
-			_bShouldClose = true;
-		}
+	{
+		_bShouldClose = true;
+	}
 		break;
 	case SDL_WINDOWEVENT:
-		{
-			if (event.window.event == SDL_WINDOWEVENT_CLOSE &&
-				event.window.windowID == SDL_GetWindowID(_sdlWindow))
-					_bShouldClose = true;
-		}
+	{
+		if (event.window.event == SDL_WINDOWEVENT_CLOSE &&
+			event.window.windowID == SDL_GetWindowID(_sdlWindow))
+				_bShouldClose = true;
+	}
 		break;
 	case SDL_KEYDOWN:
-		{
-			_inputManager.OnStateChange(event.key.keysym.scancode,
-				event.key.repeat == 0 ? KeyState::Pressed : KeyState::Repeated);
-		}
+	{
+		_inputManager.OnStateChange(event.key.keysym.scancode,
+			event.key.repeat == 0 ? KeyState::Pressed : KeyState::Repeated);
+	}
 		break;
 	case SDL_KEYUP:
-		{
-			_inputManager.OnStateChange(event.key.keysym.scancode, KeyState::Released);
-		}
+	{
+		_inputManager.OnStateChange(event.key.keysym.scancode, KeyState::Released);
+	}
 		break;
 	default:
 		break;
 	}
+}
 }

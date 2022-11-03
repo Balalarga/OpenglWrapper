@@ -6,14 +6,16 @@
 #include "Uniform.h"
 
 
+namespace Oglw
+{
 class ShaderPart;
 
 class Shader
 {
 public:
 	Shader(std::shared_ptr<ShaderPart> vShader,
-	       std::shared_ptr<ShaderPart> fShader,
-	       std::shared_ptr<ShaderPart> gShader = nullptr);
+		   std::shared_ptr<ShaderPart> fShader,
+		   std::shared_ptr<ShaderPart> gShader = nullptr);
 	~Shader();
 
 	bool Compile();
@@ -39,3 +41,4 @@ private:
 
 	std::map<std::string, int> _uniformCache;
 };
+}

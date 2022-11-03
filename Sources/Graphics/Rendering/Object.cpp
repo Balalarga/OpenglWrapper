@@ -5,6 +5,8 @@
 
 #include "Graphics/Materials/IMaterial.h"
 
+namespace Oglw
+{
 Object::Object(Buffer vbo, IMaterial* material):
 	_vbo(std::move(vbo)),
 	_material(material)
@@ -33,8 +35,9 @@ void Object::SetMaterial(IMaterial* material)
 void Object::Render() const
 {
 	_material->Bind();
-	_material->SetupUniforms();
+	_material->Prepare();
 	
 	glBindVertexArray(_glHandler);
 	glDrawArrays(_vbo.DrawType, 0, _vbo.Data.Count);
+}
 }

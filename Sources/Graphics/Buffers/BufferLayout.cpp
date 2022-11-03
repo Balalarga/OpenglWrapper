@@ -1,6 +1,8 @@
 ﻿#include "BufferLayout.h"
 #include <GL/glew.h>
 
+namespace Oglw
+{
 BufferLayout& BufferLayout::Float(unsigned count)
 {
 	Variables.push_back({GL_FLOAT, count, sizeof(GLfloat)}); Size += count * sizeof(GLfloat);
@@ -17,4 +19,5 @@ BufferLayout& BufferLayout::Unsigned(unsigned count)
 {
 	Variables.push_back({GL_UNSIGNED_INT, count, sizeof(GLuint)}); Size += count * sizeof(GLuint);
 	return *this;
+}
 }

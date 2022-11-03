@@ -3,6 +3,8 @@
 #include <vector>
 #include <GL/glew.h>
 
+namespace Oglw
+{
 ShaderPart::ShaderPart(Type type, const std::string& code):
 	_type(type),
 	_code(code)
@@ -49,7 +51,7 @@ void ShaderPart::Destroy()
 	}
 }
 
-bool ShaderPart::HasError()
+bool ShaderPart::HasError() const
 {
 	GLint isCompiled;
 	glGetShaderiv(_glHandler, GL_COMPILE_STATUS, &isCompiled);
@@ -59,9 +61,9 @@ bool ShaderPart::HasError()
 		glGetShaderiv(_glHandler, GL_INFO_LOG_LENGTH, &maxLength);
 
 		std::vector<GLchar> errorLog(maxLength);
-		glGetShaderInfoLog(_glHandler, maxLength, &maxLength, &errorLog[0]);
+		glGetShaderInfoLog(_glHandler, maxLength, &maxLength, errorLog.data());
 		// for (auto i: errorLog)
-			// std::cout<<i;
+		// std::cout<<i;
 		
 		// std::cout<<std::endl;
 
@@ -82,4 +84,5 @@ unsigned ShaderPart::GetGLType(Type type)
 		return GL_GEOMETRY_SHADER;
 	}
 	return 0;
+}
 }

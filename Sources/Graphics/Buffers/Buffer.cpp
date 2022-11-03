@@ -2,6 +2,8 @@
 #include <GL/glew.h>
 
 
+namespace Oglw
+{
 DataPtr::DataPtr():
     Ptr(nullptr),
     Count(0),
@@ -55,4 +57,5 @@ unsigned Buffer::Create()
     }
     
     return handler;
+}
 }

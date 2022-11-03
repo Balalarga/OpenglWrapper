@@ -4,6 +4,8 @@
 #include "Texture2d.h"
 #include "ThirdParty/stb/stb_image.h"
 
+namespace Oglw
+{
 TextureManager& TextureManager::Instance()
 {
 	static TextureManager manager;
@@ -36,4 +38,5 @@ std::shared_ptr<Texture2d> TextureManager::LoadTexture(const std::string& tag, c
 
 	stbi_image_free(imageData);
 	return _textures[tag];
+}
 }

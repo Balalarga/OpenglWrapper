@@ -2,6 +2,8 @@
 
 #include <GL/glew.h>
 
+namespace Oglw
+{
 Texture2d::Texture2d(glm::vec2 size, int channels, const unsigned char* data):
 	_size(size),
 	_channels(channels)
@@ -10,8 +12,6 @@ Texture2d::Texture2d(glm::vec2 size, int channels, const unsigned char* data):
 	glBindTexture(GL_TEXTURE_2D, _glHandler);
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
-	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_BASE_LEVEL, 0);
-	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAX_LEVEL, 0);
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE);
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);
 	
@@ -37,4 +37,4 @@ void Texture2d::Release()
 {
 	glBindTexture(GL_TEXTURE_2D, 0);
 }
-
+}

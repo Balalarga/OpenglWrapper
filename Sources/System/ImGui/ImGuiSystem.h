@@ -2,6 +2,8 @@
 
 #include "System/ISystem.h"
 
+namespace Oglw
+{
 class OpenglSystem;
 class WindowSystem;
 
@@ -31,3 +33,4 @@ public:
 private:
 	Params _params;
 };
+}

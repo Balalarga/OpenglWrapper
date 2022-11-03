@@ -60,10 +60,11 @@ else()
 endif()
 
 set(ASSETS_DIR ${CMAKE_SOURCE_DIR}/Assets)
+file(GLOB_RECURSE ASSETS ${ASSETS_DIR}/*)
 
 # Find all source files
 file(GLOB_RECURSE PROJECT_SOURCES Sources/*.cpp Sources/*.h Sources/*.hpp)
-add_executable(${PROJECT_NAME} ${PROJECT_SOURCES} ${ADDITIONAL_SOURCES})
+add_executable(${PROJECT_NAME} ${PROJECT_SOURCES} ${ADDITIONAL_SOURCES} ${ASSETS})
 target_compile_definitions(${PROJECT_NAME} PRIVATE "ASSETS_DIR=\"${ASSETS_DIR}\"")
 
 target_link_directories(${PROJECT_NAME} PRIVATE ${ADDITIONAL_LINK_DIRS})

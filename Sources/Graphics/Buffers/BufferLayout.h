@@ -1,6 +1,8 @@
 ﻿#pragma once
 #include <vector>
 
+namespace Oglw
+{
 class BufferLayout
 {
 public:
@@ -19,3 +21,4 @@ public:
 	std::vector<VariableInfo> Variables;
 	unsigned Size = 0;	
 };
+}

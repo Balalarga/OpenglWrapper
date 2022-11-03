@@ -1,6 +1,8 @@
 ﻿#pragma once
 #include "Graphics/Shading/Shader.h"
 
+namespace Oglw
+{
 class Shader;
 
 class IMaterial
@@ -13,17 +15,18 @@ public:
 	static void Release() { Shader::Release(); }
 
 	/// Calls between \b Binding and \b Rendering of \b Object
-	virtual void SetupUniforms() = 0;
+	virtual void Prepare() = 0;
 
-	std::weak_ptr<Shader> GetShader() { return _shader; }
+	std::weak_ptr<Shader> GetShader() const { return _shader; }
 	void SetShader(std::shared_ptr<Shader> shader);
 	
 protected:
-    void SetUniform(const std::string& name, const UniformValue& value, bool bUnbind = false) const
-    {
-    	_shader->SetUniform(name, value, bUnbind);
-    }
+	void SetUniform(const std::string& name, const UniformValue& value, bool bUnbind = false) const
+	{
+		_shader->SetUniform(name, value, bUnbind);
+	}
 	
 private:
 	std::shared_ptr<Shader> _shader;
 };
+}

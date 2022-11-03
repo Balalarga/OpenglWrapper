@@ -1,5 +1,7 @@
 ﻿#include "WindowSystem.h"
 
+namespace Oglw
+{
 WindowSystem::WindowSystem(const Params& params):
 	ISystem(TOSTRING(WindowSystem)),
 	_params(params)
@@ -15,4 +17,5 @@ bool WindowSystem::Init(bool bStatus)
 void WindowSystem::Destroy()
 {
 	_window.reset();
+}
 }

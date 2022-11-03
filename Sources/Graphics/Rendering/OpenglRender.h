@@ -3,9 +3,10 @@
 #include <vector>
 #include <SDL_video.h>
 #include "IRender.h"
-
 #include "Object.h"
 
+namespace Oglw
+{
 class OpenglRender: public IRender
 {
 public:
@@ -31,3 +32,4 @@ private:
 
 	std::vector<std::shared_ptr<Object>> _objects;
 };
+}

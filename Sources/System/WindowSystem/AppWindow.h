@@ -3,6 +3,8 @@
 #include <SDL_events.h>
 
 
+namespace Oglw
+{
 class InputManager;
 class WindowSystem;
 class IRender;
@@ -27,13 +29,15 @@ public:
 	bool ShouldClose() const { return _bShouldClose; }
 
 	SDL_Window* GetInnerWindow() const { return _sdlWindow; }
-	
+
+	const Params& GetParams() const { return _params; }
 	
 private:
 	Params _params;
 	WindowSystem& _windowSystem;
-    InputManager& _inputManager;
+	InputManager& _inputManager;
 	bool _bShouldClose = false;
 	
-    SDL_Window* _sdlWindow;
+	SDL_Window* _sdlWindow;
 };
+}

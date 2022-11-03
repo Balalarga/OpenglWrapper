@@ -5,6 +5,8 @@
 #include "Sdl/SdlSystem.h"
 #include "WindowSystem/WindowSystem.h"
 
+namespace Oglw
+{
 static SystemManager sSelf;
 
 SystemManager& SystemManager::Instance()
@@ -45,4 +47,5 @@ void SystemManager::InitDefaults()
 	
 	ImGuiSystem::Params imguiParams(sSelf.windowSystem, sSelf.openglSystem);
 	sSelf.imguiSystem = &CreateSystem<ImGuiSystem>(imguiParams);	
+}
 }

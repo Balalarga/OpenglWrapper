@@ -4,6 +4,8 @@
 #include "Utils/Macroses.h"
 
 
+namespace Oglw
+{
 SdlSystem::SdlSystem(const Params& inParams):
 	ISystem(TOSTRING(SdlSystem)),
 	_params(inParams),
@@ -27,4 +29,5 @@ void SdlSystem::Destroy()
 	{
 		SDL_Quit();
 	}
+}
 }

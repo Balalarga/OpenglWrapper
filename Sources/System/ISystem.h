@@ -2,6 +2,8 @@
 #include <string>
 
 
+namespace Oglw
+{
 class ISystem
 {
 public:
@@ -24,3 +26,4 @@ private:
 	std::string _name;
 	bool _bWasInit = false;
 };
+}

@@ -3,6 +3,8 @@
 #include <functional>
 #include <SDL.h>
 
+namespace Oglw
+{
 enum class KeyState
 {
 	Pressed, Released, Repeated
@@ -25,3 +27,4 @@ protected:
 private:
 	std::vector<std::function<void(const KeyState&)>> KeyCallbacks[SDL_NUM_SCANCODES];
 };
+}
