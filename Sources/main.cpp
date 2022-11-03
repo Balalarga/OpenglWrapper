@@ -1,6 +1,7 @@
 #include <GL/glew.h>
 #include <glm/glm.hpp>
 
+#include "Application.h"
 #include "Graphics/Materials/BaseMaterial.h"
 #include "Graphics/Materials/Texture2dMaterial.h"
 #include "Graphics/Rendering/OpenglRender.h"
@@ -49,52 +50,55 @@ void main()
 }
 )";
 
-std::shared_ptr<Texture2dMaterial> baseMat;
-
-bool TestScene(OpenglRender& render)
+class MyApp: public Application
 {
-    const std::shared_ptr<Texture2d> texture = TextureManager::Instance().LoadTexture("newTexture", ASSETS_DIR"/Image.png");
-    if (!texture)
-        return false;
+public:
+    std::shared_ptr<Texture2dMaterial> baseMat;
     
-    const std::shared_ptr<Shader> shader = ShaderLoader::LoadCode(vShaderCode, fShaderCode);
-    shader->Compile();
+    void Init() override
+    {
+        WindowSystem* windowSystem = GetSystemManager().windowSystem;
+        glEnable(GL_BLEND);
+        glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+        OpenglRender& render = windowSystem->CreateRender<OpenglRender>(windowSystem->GetWindow().GetInnerWindow());
 
-    struct {
-        glm::vec3 pos;
-        glm::vec4 color;
-        glm::vec2 uv;
-    } triangle[] {
-        {{-0.5f, -0.5f, 0.f}, {1.f, 0.f, 0.f, 1.f}, { 0.0f,  0.0f}},
-        {{-0.5f,  0.5f, 0.f}, {1.f, 1.f, 0.f, 1.f}, { 0.0f,  1.0f}},
-        {{ 0.5f,  0.5f, 0.f}, {1.f, 0.f, 0.f, 1.f}, { 1.0f,  1.0f}},
-        {{ 0.5f,  0.5f, 0.f}, {1.f, 0.f, 0.f, 1.f}, { 1.0f,  1.0f}},
-        {{ 0.5f, -0.5f, 0.f}, {1.f, 1.f, 0.f, 1.f}, { 1.0f,  0.0f}},
-        {{-0.5f, -0.5f, 0.f}, {1.f, 0.f, 0.f, 1.f}, { 0.0f,  0.0f}},
-    };
-    baseMat = std::make_shared<Texture2dMaterial>(shader, texture.get());
-    baseMat->SetColor({1, 0, 0, 1});
-    Buffer buffer(DataPtr(triangle, std::size(triangle), sizeof(triangle[0])), BufferLayout().Float(3).Float(4).Float(2));
+        const std::shared_ptr<Texture2d> texture = TextureManager::Instance().LoadTexture("newTexture", ASSETS_DIR"/Image.png");
+        if (!texture)
+            return;
     
-    render.CreateObject<Object>(buffer, baseMat.get());
+        const std::shared_ptr<Shader> shader = ShaderLoader::LoadCode(vShaderCode, fShaderCode);
+        shader->Compile();
+
+        struct {
+            glm::vec3 pos;
+            glm::vec4 color;
+            glm::vec2 uv;
+        } triangle[] {
+            {{-0.5f, -0.5f, 0.f}, {1.f, 0.f, 0.f, 1.f}, { 0.0f,  0.0f}},
+            {{-0.5f,  0.5f, 0.f}, {1.f, 1.f, 0.f, 1.f}, { 0.0f,  1.0f}},
+            {{ 0.5f,  0.5f, 0.f}, {1.f, 0.f, 0.f, 1.f}, { 1.0f,  1.0f}},
+            {{ 0.5f,  0.5f, 0.f}, {1.f, 0.f, 0.f, 1.f}, { 1.0f,  1.0f}},
+            {{ 0.5f, -0.5f, 0.f}, {1.f, 1.f, 0.f, 1.f}, { 1.0f,  0.0f}},
+            {{-0.5f, -0.5f, 0.f}, {1.f, 0.f, 0.f, 1.f}, { 0.0f,  0.0f}},
+        };
+        baseMat = std::make_shared<Texture2dMaterial>(shader, texture.get());
+        baseMat->SetColor({1, 0, 0, 1});
+        Buffer buffer(DataPtr(triangle, std::size(triangle), sizeof(triangle[0])), BufferLayout().Float(3).Float(4).Float(2));
     
-    return true;
-}
+        render.CreateObject<Object>(buffer, baseMat.get());
+    }
+    
+    void Destroy() override
+    {
+        
+    }
+};
 
 int main(int argc, char** argv)
 {
-    const SystemManager& systemManager = SystemManager::Init();
-
-    glEnable(GL_BLEND);
-    glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+    MyApp app;
     
-    OpenglRender& render = systemManager.windowSystem->CreateRender<OpenglRender>(systemManager.windowSystem->GetWindow().GetInnerWindow());
-
-    TestScene(render);
+    app.Run();
     
-    AppWindow& window = systemManager.windowSystem->GetWindow();
-    window.Show();
-    
-    SystemManager::Destroy();
     return 0;
 }
