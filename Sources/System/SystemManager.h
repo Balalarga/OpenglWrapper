@@ -16,15 +16,10 @@ class SystemManager
 {
 public:
 	static SystemManager& Instance();
-
-	SdlSystem* sdlSystem{};
-	WindowSystem* windowSystem{};
-	OpenglSystem* openglSystem{};
-	ImGuiSystem* imguiSystem{};
 	
 	static SystemManager& Init();
 	static void Destroy();
-
+	
 	template<class T, class ...TArgs>
 	static std::enable_if_t<std::derived_from<T, ISystem>, T&> CreateSystem(TArgs&& ...args)
 	{
@@ -32,9 +27,10 @@ public:
 		assert(!GetSystem(system->GetName()));
 		Instance()._names.emplace(system->GetName(), Instance()._systems.size());
 		Instance()._systems.emplace_back(system);
+		system->SetWasInit(system->Init());
 		return *system;
 	}
-
+	
 	template<class T>
 	static std::enable_if_t<std::derived_from<T, ISystem>, T*> GetSystem(const std::string& name)
 	{
@@ -52,7 +48,13 @@ public:
 		
 		return nullptr;
 	}
-
+	
+	SdlSystem* sdlSystem{};
+	WindowSystem* windowSystem{};
+	OpenglSystem* openglSystem{};
+	ImGuiSystem* imguiSystem{};
+	
+protected:
 	static void InitDefaults();
 	
 private:

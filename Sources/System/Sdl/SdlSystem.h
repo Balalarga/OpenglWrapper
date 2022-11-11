@@ -14,7 +14,7 @@ public:
 	
 	SdlSystem(const Params& inParams);
 	
-	bool Init(bool bStatus) override;
+	bool Init() override;
 	
 	void Destroy() override;
 

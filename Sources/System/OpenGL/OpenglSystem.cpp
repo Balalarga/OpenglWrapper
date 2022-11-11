@@ -14,7 +14,7 @@ OpenglSystem::OpenglSystem(const Params& params):
 {
 }
 
-bool OpenglSystem::Init(bool bStatus)
+bool OpenglSystem::Init()
 {
 	SDL_GL_SetAttribute(SDL_GL_CONTEXT_FLAGS, _params.contextFlags);
 	SDL_GL_SetAttribute(SDL_GL_CONTEXT_PROFILE_MASK, _params.contextProfileMask);

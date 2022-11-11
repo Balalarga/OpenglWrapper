@@ -8,7 +8,7 @@ WindowSystem::WindowSystem(const Params& params):
 {
 }
 
-bool WindowSystem::Init(bool bStatus)
+bool WindowSystem::Init()
 {
 	_window = std::make_unique<AppWindow>(_params.windowParams, *this);
 	return true;

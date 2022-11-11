@@ -18,7 +18,7 @@ public:
 
 	WindowSystem(const Params& params);
 	
-	bool Init(bool bStatus) override;
+	bool Init() override;
 	void Destroy() override;
 
 	AppWindow& GetWindow() { return *_window; }

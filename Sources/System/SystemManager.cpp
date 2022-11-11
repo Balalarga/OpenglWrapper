@@ -19,9 +19,6 @@ SystemManager& SystemManager::Init()
 	if (!sSelf.sdlSystem)
 		InitDefaults();
 	
-	for (const std::unique_ptr<ISystem>& system : sSelf._systems)
-		system->SetWasInit(system->Init(system->WasInit()));
-	
 	return sSelf;
 }
 

@@ -3,6 +3,12 @@
 
 namespace Oglw
 {
+struct DataPtr;
+class Buffer;
+}
+
+namespace Oglw
+{
 class Shader;
 
 class IMaterial
@@ -17,6 +23,8 @@ public:
 	/// Calls between \b Binding and \b Rendering of \b Object
 	virtual void Prepare() = 0;
 
+	virtual Buffer CreateBufferWithLayout(const DataPtr& data) = 0;
+	
 	std::weak_ptr<Shader> GetShader() const { return _shader; }
 	void SetShader(std::shared_ptr<Shader> shader);
 	

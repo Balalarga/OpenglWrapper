@@ -12,4 +12,9 @@ void BaseMaterial::Prepare()
 {
 	SetUniform("uColor", _color);
 }
+
+Buffer BaseMaterial::CreateBufferWithLayout(const DataPtr& data)
+{
+	return { data, BufferLayout().Float(3).Float(4) };
+}
 }

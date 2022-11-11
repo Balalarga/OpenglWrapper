@@ -8,9 +8,9 @@ ISystem::ISystem(std::string name):
 	
 }
 
-bool ISystem::Init(bool bStatus)
+bool ISystem::Init()
 {
-	return bStatus;
+	return true;
 }
 
 void ISystem::Destroy()

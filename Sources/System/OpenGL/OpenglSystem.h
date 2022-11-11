@@ -29,7 +29,7 @@ public:
 	OpenglSystem(const Params& params);
 
 	const SDL_GLContext& GetContext() const { return _glContext; }
-	bool Init(bool bStatus) override;
+	bool Init() override;
 	void Destroy() override;
 
 	// OpenglWrapping

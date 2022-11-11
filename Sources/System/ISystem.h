@@ -10,7 +10,7 @@ public:
 	ISystem(std::string name);
 	virtual ~ISystem() = default;
 
-	virtual bool Init(bool bStatus);
+	virtual bool Init();
 	virtual void Destroy();
 
 	const std::string& GetName() const { return _name; }

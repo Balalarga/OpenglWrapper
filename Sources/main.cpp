@@ -69,11 +69,8 @@ public:
         const std::shared_ptr<Shader> shader = ShaderLoader::LoadCode(vShaderCode, fShaderCode);
         shader->Compile();
 
-        struct {
-            glm::vec3 pos;
-            glm::vec4 color;
-            glm::vec2 uv;
-        } triangle[] {
+        Texture2dMaterial::VertexData triangle[]
+        {
             {{-0.5f, -0.5f, 0.f}, {1.f, 0.f, 0.f, 1.f}, { 0.0f,  0.0f}},
             {{-0.5f,  0.5f, 0.f}, {1.f, 1.f, 0.f, 1.f}, { 0.0f,  1.0f}},
             {{ 0.5f,  0.5f, 0.f}, {1.f, 0.f, 0.f, 1.f}, { 1.0f,  1.0f}},
@@ -83,8 +80,7 @@ public:
         };
         baseMat = std::make_shared<Texture2dMaterial>(shader, texture.get());
         baseMat->SetColor({1, 0, 0, 1});
-        Buffer buffer(DataPtr(triangle, std::size(triangle), sizeof(triangle[0])), BufferLayout().Float(3).Float(4).Float(2));
-    
+        Buffer buffer = baseMat->CreateBufferWithLayout(DataPtr(triangle, std::size(triangle), sizeof(Texture2dMaterial::VertexData)));
         render.CreateObject<Object>(buffer, baseMat.get());
     }
     

@@ -13,7 +13,7 @@ SdlSystem::SdlSystem(const Params& inParams):
 {
 }
 
-bool SdlSystem::Init(bool bStatus)
+bool SdlSystem::Init()
 {
 	if (SDL_Init(_params.Subsystems) != 0)
 		return false;

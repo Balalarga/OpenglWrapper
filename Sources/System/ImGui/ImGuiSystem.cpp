@@ -15,7 +15,7 @@ ImGuiSystem::ImGuiSystem(const Params& params):
 {
 }
 
-bool ImGuiSystem::Init(bool bStatus)
+bool ImGuiSystem::Init()
 {
 	if (_params.windowSystem)
 	{
