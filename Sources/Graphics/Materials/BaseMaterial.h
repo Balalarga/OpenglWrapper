@@ -8,14 +8,15 @@ class BaseMaterial: public IMaterial
 {
 public:
 	BaseMaterial(std::shared_ptr<Shader> shader);
+	BaseMaterial();
 	
 	void Prepare() override;
 	
 	Buffer CreateBufferWithLayout(const DataPtr& data) override;
 
-	void SetColor(glm::vec4 color) { _color = color; }
+	void SetModelMatrix(const glm::mat4& matrix) { _modelMatrix = matrix; }
 	
 private:
-	glm::vec4 _color;
+	glm::mat4 _modelMatrix;
 };
 }

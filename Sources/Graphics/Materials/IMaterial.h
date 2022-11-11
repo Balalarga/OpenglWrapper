@@ -25,7 +25,7 @@ public:
 
 	virtual Buffer CreateBufferWithLayout(const DataPtr& data) = 0;
 	
-	std::weak_ptr<Shader> GetShader() const { return _shader; }
+	std::shared_ptr<Shader> GetShader() const { return _shader; }
 	void SetShader(std::shared_ptr<Shader> shader);
 	
 protected:
