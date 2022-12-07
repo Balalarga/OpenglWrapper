@@ -46,7 +46,7 @@ public:
     
     void Destroy() override
     {
-        
+        baseMat.reset();
     }
 };
 
