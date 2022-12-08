@@ -36,7 +36,7 @@ BaseMaterial::BaseMaterial(std::shared_ptr<Shader> shader):
 }
 
 BaseMaterial::BaseMaterial():
-	IMaterial(ShaderLoader::LoadCode(defaultVertShader, defaultFragShader)),
+	IMaterial(ShaderLoader::LoadCode("BaseMaterialShader", defaultVertShader, defaultFragShader)),
 	_modelMatrix(1.f)
 {
     GetShader()->Compile();

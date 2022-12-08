@@ -1,6 +1,6 @@
 [submodule "ThirdParty/ImGui"]
 	path = ThirdParty/ImGui
 	url = https://github.com/ocornut/imgui.git
-[submodule "ThirdParty\\JsonConfiger"]
-	path = ThirdParty\\JsonConfiger
-	url = https://github.com/Balalarga/JsonConfiger.git
+[submodule "ThirdParty/Cereal"]
+	path = ThirdParty/Cereal
+	url = https://github.com/USCiLab/cereal.git

@@ -1,3 +1,4 @@
+#include <fstream>
 #include <GL/glew.h>
 #include <glm/glm.hpp>
 
@@ -9,6 +10,9 @@
 #include "System/SystemManager.h"
 #include "System/WindowSystem/AppWindow.h"
 #include "System/WindowSystem/WindowSystem.h"
+
+#include "cereal/cereal.hpp"
+#include "cereal/archives/json.hpp"
 
 using namespace std;
 using namespace Oglw;
@@ -39,6 +43,15 @@ public:
             {{ 0.5f, -0.5f, 0.f}, {1.f, 1.f, 0.f, 1.f}, { 1.0f,  0.0f}},
             {{-0.5f, -0.5f, 0.f}, {1.f, 0.f, 0.f, 1.f}, { 0.0f,  0.0f}},
         };
+
+        std::ofstream output("someJsonFile.json");
+        {
+            cereal::JSONOutputArchive ar(output);
+            auto val = glm::vec3(0, 0, 1);
+            ar(CEREAL_NVP(val));
+        }
+        output.close();
+        
         baseMat = std::make_shared<Texture2dMaterial>(texture.get());
         Buffer buffer = baseMat->CreateBufferWithLayout(DataPtr(triangle, std::size(triangle), sizeof(Texture2dMaterial::VertexData)));
         render.CreateObject<Object>(buffer, baseMat.get());

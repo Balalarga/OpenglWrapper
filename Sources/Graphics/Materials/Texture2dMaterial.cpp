@@ -49,7 +49,7 @@ Texture2dMaterial::Texture2dMaterial(std::shared_ptr<Shader> shader, Texture2d* 
 }
 
 Texture2dMaterial::Texture2dMaterial(Texture2d* texture):
-	BaseMaterial(ShaderLoader::LoadCode(defaultVertShader, defaultFragShader)),
+	BaseMaterial(ShaderLoader::LoadCode("Texture2dMaterialShader", defaultVertShader, defaultFragShader)),
 	_texture(texture)
 {
     GetShader()->Compile();

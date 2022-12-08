@@ -4,6 +4,7 @@
 #include <string>
 
 #include "Uniform.h"
+#include "Utils/CerealTypes.h"
 
 
 namespace Oglw
@@ -26,6 +27,10 @@ public:
 
 	void SetUniform(const std::string& name, const UniformValue& value, bool bUnbind = false);
 
+	CEREAL_SERIALIZATION({
+		archive();
+	})
+	
 protected:
 	int GetUniformLocation(const std::string& name);
 
