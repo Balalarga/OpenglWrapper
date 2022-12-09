@@ -29,6 +29,35 @@ void main()
     fragColor = vertColor;
 })";
 
+ShaderInfo BaseMaterial::sDefaultShaderInfo = {
+	ShaderPartInfo{
+		"BaseMaterial/default.vert",
+		defaultVertShader,
+		{
+			{"vec3", "iVert", 0},
+			{"vec4", "iVertColor", 1},
+		},
+		{
+			{"vec4", "vertColor"},
+		},
+		{
+			{"mat4", "uModelMatrix"},
+		}
+	},
+	ShaderPartInfo{
+		"BaseMaterial/default.frag",
+		defaultFragShader,
+		{
+				{"vec3", "vertColor", 0},
+			},
+			{
+				{"vec4", "fragColor"},
+			},
+			{
+			}
+	}
+};
+
 BaseMaterial::BaseMaterial(std::shared_ptr<Shader> shader):
 	IMaterial(std::move(shader)),
 	_modelMatrix(1.f)
@@ -36,7 +65,7 @@ BaseMaterial::BaseMaterial(std::shared_ptr<Shader> shader):
 }
 
 BaseMaterial::BaseMaterial():
-	IMaterial(ShaderLoader::LoadCode("BaseMaterialShader", defaultVertShader, defaultFragShader)),
+	IMaterial(ShaderLoader::TryGetShader("BaseMaterialShader", sDefaultShaderInfo)),
 	_modelMatrix(1.f)
 {
     GetShader()->Compile();

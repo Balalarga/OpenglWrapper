@@ -37,6 +37,40 @@ void main()
     fragColor = texture(uTexture, vertUv);
 })";
 
+
+ShaderInfo Texture2dMaterial::sDefaultShaderInfo = {
+	ShaderPartInfo{
+		"Texture2dMaterial/default.vert",
+		defaultVertShader,
+		{
+				{"vec3", "iVert", 0},
+				{"vec4", "iVertColor", 1},
+				{"vec2", "iVertUv", 2},
+			},
+			{
+				{"vec4", "vertColor"},
+				{"vec2", "vertUv"},
+			},
+			{
+				{"mat4", "uModelMatrix"},
+			}
+	},
+	ShaderPartInfo{
+		"Texture2dMaterial/default.frag",
+		defaultFragShader,
+		{
+					{"vec3", "vertColor", 0},
+					{"vec2", "vertUv", 0},
+				},
+				{
+					{"vec4", "fragColor"},
+				},
+				{
+					{"sampler2D", "uTexture"},
+				}
+	}
+};
+
 Buffer Texture2dMaterial::CreateBufferWithLayout(const DataPtr& data)
 {
 	return { data, BufferLayout().Float(3).Float(4).Float(2) };
@@ -49,7 +83,7 @@ Texture2dMaterial::Texture2dMaterial(std::shared_ptr<Shader> shader, Texture2d* 
 }
 
 Texture2dMaterial::Texture2dMaterial(Texture2d* texture):
-	BaseMaterial(ShaderLoader::LoadCode("Texture2dMaterialShader", defaultVertShader, defaultFragShader)),
+	BaseMaterial(ShaderLoader::TryGetShader("Texture2dMaterialShader", sDefaultShaderInfo)),
 	_texture(texture)
 {
     GetShader()->Compile();

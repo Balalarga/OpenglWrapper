@@ -1,0 +1,77 @@
+{
+    "Shaders": [
+        {
+            "key": "Texture2dMaterialShader",
+            "value": {
+                "vertexPart": {
+                    "filepath": "Texture2dMaterial/default.vert",
+                    "inputs": [
+                        {
+                            "name": "iVert",
+                            "type": "vec3",
+                            "id": 0
+                        },
+                        {
+                            "name": "iVertColor",
+                            "type": "vec4",
+                            "id": 1
+                        },
+                        {
+                            "name": "iVertUv",
+                            "type": "vec2",
+                            "id": 2
+                        }
+                    ],
+                    "outputs": [
+                        {
+                            "name": "vertColor",
+                            "type": "vec4",
+                            "id": -1
+                        },
+                        {
+                            "name": "vertUv",
+                            "type": "vec2",
+                            "id": -1
+                        }
+                    ],
+                    "uniforms": [
+                        {
+                            "name": "uModelMatrix",
+                            "type": "mat4",
+                            "id": -1
+                        }
+                    ]
+                },
+                "fragmentPart": {
+                    "filepath": "Texture2dMaterial/default.frag",
+                    "inputs": [
+                        {
+                            "name": "vertColor",
+                            "type": "vec3",
+                            "id": 0
+                        },
+                        {
+                            "name": "vertUv",
+                            "type": "vec2",
+                            "id": 0
+                        }
+                    ],
+                    "outputs": [
+                        {
+                            "name": "fragColor",
+                            "type": "vec4",
+                            "id": -1
+                        }
+                    ],
+                    "uniforms": [
+                        {
+                            "name": "uTexture",
+                            "type": "sampler2D",
+                            "id": -1
+                        }
+                    ]
+                }
+            }
+        }
+    ]
+}

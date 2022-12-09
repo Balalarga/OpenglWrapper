@@ -15,7 +15,7 @@ template<class Archive> void serialize(Archive& archive) code
 template<class Archive> void load(Archive& archive) code
 
 #define CEREAL_SAVE(code) \
-template<class Archive> void save(Archive& archive) code
+template<class Archive> void save(Archive& archive) const code
 
 
 template<class Archive>

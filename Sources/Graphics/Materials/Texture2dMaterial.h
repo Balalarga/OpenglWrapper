@@ -20,6 +20,8 @@ public:
 
 	void Prepare() override;
 
+	static ShaderInfo sDefaultShaderInfo;
+
 private:
 	Texture2d* _texture;
 };
