@@ -1,4 +1,7 @@
 .cache/
+.vs/
+.vscode/
+.idea/
 VsProject/
 Debug/
 Release/
