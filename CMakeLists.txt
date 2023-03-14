@@ -50,7 +50,7 @@ if (${ENABLE_IMGUI})
         ${THIRDPARTY_DIR}/ImGui/imgui_tables.cpp
         ${THIRDPARTY_DIR}/ImGui/imgui_widgets.cpp
         # SDL2+OpenGL-specific files
-        ${THIRDPARTY_DIR}/ImGui/backends/imgui_impl_sdl.cpp
+        ${THIRDPARTY_DIR}/ImGui/backends/imgui_impl_sdl2.cpp
         ${THIRDPARTY_DIR}/ImGui/backends/imgui_impl_opengl3.cpp)
     set(ADDITIONAL_INCLUDE_DIRS ${ADDITIONAL_INCLUDE_DIRS}
         ${THIRDPARTY_DIR}/ImGui/
